@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   processor.c                                        :+:      :+:    :+:   */
+/*   ft_processor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 19:22:29 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/11 20:35:44 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/21 18:56:58 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	print_percent()
+static int		print_percent(va_list arg, t_parse *ag_str)
 {
+	int		wi;
+	char	c;
+
+	c = va_arg(arg, int);
+	wi = ag_str->width;
+	if (wi != 0 && ag_str->negative == 0 && !ag_str->zero)
+		print_void((ag_str->zero == 1 ? '0' : ' '), wi - 1);
 	write(1, "%", 1);
-	return (1);
+	if (wi != 0 && ag_str->negative == 1)
+		print_void((ag_str->zero == 1 ? '0' : ' '), wi - 1);
+	return (wi == 0 ? 1 : wi);
 }
 
 int		process_arg(va_list args, t_parse *ag_str)
@@ -40,6 +49,6 @@ int		process_arg(va_list args, t_parse *ag_str)
 	if (type == 'X')
 		ag_str->length = 1;
 	if (type == '%')
-		ag_str->length = print_percent();
+		ag_str->length = print_percent(args, ag_str);;
 	return (ag_str->length);
 }

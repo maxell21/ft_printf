@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str.c                                           :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 20:26:25 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/17 17:49:40 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/21 18:59:30 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ int		print_args(const char *str, va_list args)
 		if (str[i] == '%')
 		{
 			initialize(&arg_struct);
-			i = parser((char*)str, i + 1, args, &arg_struct);
+			i = parser((char*)str, i + 1, args, &arg_struct) - 1;
 			result_len += arg_struct.length;
 		}
-		write(1, &str[i], 1);
+		else
+			result_len += write(1, &str[i], 1);
 		i++;
-		result_len++;
+	
 	}
 	return (result_len);
 }
