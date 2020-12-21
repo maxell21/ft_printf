@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_p.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 19:47:49 by maxell            #+#    #+#             */
+/*   Updated: 2020/12/21 19:47:50 by maxell           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	count_len(unsigned long number)
@@ -10,7 +22,7 @@ static int	count_len(unsigned long number)
 	return (i);
 }
 
-void	ft_puthex(unsigned long n)
+void		ft_puthex(unsigned long n)
 {
 	if (n > 15)
 	{
@@ -43,7 +55,7 @@ int			print_pointer(va_list args, t_parse *ag_str)
 	void	*ptr;
 	int		wi;
 	int		len;
-	int fl;
+	int		fl;
 
 	fl = 0;
 	ptr = va_arg(args, void*);

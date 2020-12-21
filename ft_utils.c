@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cstype.c                                        :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:17:59 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/17 15:47:02 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/21 19:45:32 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-int	skip_flags(char *str, int i, t_parse *arg)
+int		skip_flags(char *str, int i, t_parse *arg)
 {
 	while (str[i] == '0' || str[i] == '-')
 	{
@@ -48,7 +48,7 @@ int	skip_flags(char *str, int i, t_parse *arg)
 	return (i);
 }
 
-int	ft_num_len(int num)
+int		ft_num_len(int num)
 {
 	int	len;
 
@@ -60,4 +60,3 @@ int	ft_num_len(int num)
 	}
 	return (len);
 }
-

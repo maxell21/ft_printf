@@ -6,7 +6,7 @@
 #    By: maxell <maxell@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/11 18:08:30 by maxell            #+#    #+#              #
-#    Updated: 2020/12/21 19:12:30 by maxell           ###   ########.fr        #
+#    Updated: 2020/12/21 19:53:32 by maxell           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(NAME) : $(OBJ)
 all: $(NAME)
 
 compile:
-	gcc -Wall -Werror -Wextra -g *.c -o ft_printf
+	gcc -Wall -Werror -Wextra -g *.c -o ft_printf libftprintf.a
 
 clean:
 	$(MAKE) clean -C ./libft

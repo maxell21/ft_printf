@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 19:50:04 by maxell            #+#    #+#             */
+/*   Updated: 2020/12/21 19:50:05 by maxell           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int main()
@@ -11,8 +23,8 @@ int main()
 	// ft_printf("|%-100p|\n", a);
 	// printf("|%-100p|\n", a);
 
-	int a = printf("%.7s\n", "hello");
-	int len = ft_printf("%.7s\n", "hello");
+	int a = printf("%.s\n", "NULL");
+	int len = ft_printf("%.s\n", "NULL");
 	printf("orig = %d, mine = %d\n", a, len);
 	// printf("original = %s, %s\n", "abc", "def");
 	return 0;

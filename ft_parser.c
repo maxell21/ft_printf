@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/11 20:26:25 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 18:59:30 by maxell           ###   ########.fr       */
+/*   Created: 2020/12/21 19:47:20 by maxell            #+#    #+#             */
+/*   Updated: 2020/12/21 19:47:26 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		count_precision(char *str, int i, t_parse *ag_str)
 	pr = 0;
 	i = i + 1;
 	if (str[i] == '*')
-			pr = 1;			
+		pr = 1;
 	while (ft_isdigit(str[i]))
 	{
 		pr = (pr * 10) + (str[i] - 48);
@@ -42,27 +42,28 @@ static int		count_precision(char *str, int i, t_parse *ag_str)
 	return (i);
 }
 
-static int		parser(char *str, int i, va_list args, t_parse *ag_str)
+static int		parser(char *str, int i, va_list args, t_parse *st)
 {
 	int	wi;
 
 	wi = 0;
-	i = skip_flags(str, i, ag_str);
-	while (!ft_istype(str[i]) && ag_str->dot == 0)
+	i = skip_flags(str, i, st);
+	while (!ft_istype(str[i]) && st->dot == 0)
 	{
 		if (ft_isdigit(str[i]))
 			wi = (wi * 10) + (str[i] - 48);
 		if (str[i] == '.')
-			i = count_precision(str, i, ag_str);
+			i = count_precision(str, i, st) - 1;
 		i++;
 	}
-	ag_str->width = wi;
-	ag_str->type = str[i];
-	process_arg(args, ag_str);
+	st->width = wi;
+	st->type = str[i];
+	(st->zero && (st->negative || st->dot)) ? st->zero = 0 : 0;
+	process_arg(args, st);
 	return (i + 1);
 }
 
-int		print_args(const char *str, va_list args)
+int				print_args(const char *str, va_list args)
 {
 	int		i;
 	int		result_len;
@@ -81,7 +82,6 @@ int		print_args(const char *str, va_list args)
 		else
 			result_len += write(1, &str[i], 1);
 		i++;
-	
 	}
 	return (result_len);
 }

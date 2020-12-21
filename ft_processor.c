@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_processor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/11 19:22:29 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 18:56:58 by maxell           ###   ########.fr       */
+/*   Created: 2020/12/21 19:49:39 by maxell            #+#    #+#             */
+/*   Updated: 2020/12/21 19:49:41 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		print_percent(va_list arg, t_parse *ag_str)
 	return (wi == 0 ? 1 : wi);
 }
 
-int		process_arg(va_list args, t_parse *ag_str)
+int				process_arg(va_list args, t_parse *ag_str)
 {
 	char	type;
 
@@ -49,6 +49,6 @@ int		process_arg(va_list args, t_parse *ag_str)
 	if (type == 'X')
 		ag_str->length = 1;
 	if (type == '%')
-		ag_str->length = print_percent(args, ag_str);;
+		ag_str->length = print_percent(args, ag_str);
 	return (ag_str->length);
 }
