@@ -6,7 +6,7 @@
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:17:59 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 19:45:32 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/23 20:14:19 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ int		ft_num_len(int num)
 	int	len;
 
 	len = 0;
-	while (num > 0)
+	if (num == 0)
+		return (1);
+	if (num < 0)
+	{
+		num *= 1;
+		len++;
+	}
+	while (num != 0)
 	{
 		len += 1;
 		num = num / 10;
