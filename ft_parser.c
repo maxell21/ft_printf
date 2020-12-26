@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:47:20 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 19:47:26 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/26 18:51:23 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_parse	*initialize(t_parse *args)
 	args->length = 0;
 	args->type = '0';
 	args->dot = 0;
+	args->is_neg = 0;
 	return (args);
 }
 

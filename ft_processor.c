@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_processor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxell <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:49:39 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 19:49:41 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/21 20:35:21 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int				process_arg(va_list args, t_parse *ag_str)
 	if (type == 'p')
 		ag_str->length = print_pointer(args, ag_str);
 	if (type == 'd')
-		ag_str->length = 1;
+		ag_str->length = print_digit(args, ag_str);
 	if (type == 'i')
 		ag_str->length = 1;
 	if (type == 'u')
