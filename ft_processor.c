@@ -6,11 +6,20 @@
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:49:39 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/21 20:35:21 by maxell           ###   ########.fr       */
+/*   Updated: 2020/12/27 19:17:02 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int				ft_istype(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' ||\
+		c == 'd' || c == 'i' || c == 'u' ||\
+		c == 'x' || c == 'X' || c == '%')
+		return (1);
+	return (0);
+}
 
 static int		print_percent(va_list arg, t_parse *ag_str)
 {
