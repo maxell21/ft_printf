@@ -6,13 +6,41 @@
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:17:59 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/26 21:18:36 by maxell           ###   ########.fr       */
+/*   Updated: 2021/01/09 21:41:26 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		print_void(char c, int width)
+void		ft_puthex(unsigned long n, int fl, int fl2)
+{
+	if (fl == 1)
+		return ;
+	if (n > 15)
+	{
+		ft_puthex((n / 16), fl, fl2);
+		ft_puthex((n % 16), fl, fl2);
+	}
+	else if (n < 10)
+		ft_putchar(n + '0');
+	else
+	{
+		if (n == 10)
+			(fl2) ? ft_putchar('A') : ft_putchar('a');
+		if (n == 11)
+			(fl2) ? ft_putchar('B') : ft_putchar('b');
+		if (n == 12)
+			(fl2) ? ft_putchar('C') : ft_putchar('c');
+		if (n == 13)
+			(fl2) ? ft_putchar('D') : ft_putchar('d');
+		if (n == 14)
+			(fl2) ? ft_putchar('E') : ft_putchar('e');
+		if (n == 15)
+			(fl2) ? ft_putchar('F') : ft_putchar('f');
+	}
+}
+
+int			print_void(char c, int width)
 {
 	int i;
 
@@ -26,7 +54,7 @@ int		print_void(char c, int width)
 	return (i);
 }
 
-void	ft_putstr_width(char *s, int width)
+void		ft_putstr_width(char *s, int width)
 {
 	int i;
 
@@ -38,7 +66,7 @@ void	ft_putstr_width(char *s, int width)
 	}
 }
 
-int		skip_flags(char *str, int i, t_parse *arg)
+int			skip_flags(char *str, int i, t_parse *arg)
 {
 	while (str[i] == '0' || str[i] == '-')
 	{
@@ -51,14 +79,7 @@ int		skip_flags(char *str, int i, t_parse *arg)
 	return (i);
 }
 
-int		ft_abs(int num)
-{
-	if (num <= 0)
-		return (num * (-1));
-	return (num);
-}
-
-int		ft_num_len(int num)
+int			ft_num_len(long num)
 {
 	int	len;
 

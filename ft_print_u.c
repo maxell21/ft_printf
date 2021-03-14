@@ -1,91 +1,104 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_p.c                                       :+:      :+:    :+:   */
+/*   ft_print_u.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 19:47:49 by maxell            #+#    #+#             */
-/*   Updated: 2021/01/11 17:58:41 by maxell           ###   ########.fr       */
+/*   Created: 2021/01/07 17:14:14 by maxell            #+#    #+#             */
+/*   Updated: 2021/01/11 18:01:59 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			count_len(unsigned long number)
+static int	ft_num(unsigned long long num)
 {
-	int i;
+	int	len;
 
-	i = 1;
-	while (number /= 16)
-		i++;
-	return (i);
+	len = 1;
+	if (num == 0)
+		return (len);
+	while (num >= 10)
+	{
+		num /= 10;
+		len += 1;
+	}
+	return (len);
 }
 
-static int	print_ptr2(unsigned long num, int len, int count, t_parse *st)
+static void	ft_putlong(unsigned long long n, int fl)
 {
-	int fl;
+	if (fl == 1)
+		return ;
+	if (n == 4294967295)
+	{
+		ft_putchar('4');
+		ft_putlong(294967295, fl);
+	}
+	else if (n < 0)
+	{
+		ft_putchar('-');
+		ft_putlong(n * (-1), fl);
+	}
+	else
+	{
+		if (n >= 10)
+			ft_putlong(n / 10, fl);
+		ft_putchar((n % 10) + 48);
+	}
+}
 
-	fl = 0;
+static int	print_pt2(unsigned long num, int len, int count, t_parse *st)
+{
 	if (st->wi && !st->dot)
 		count += print_void(' ', st->wi - len);
-	else if (st->pr > st->wi)
-	{
-		count += write(1, "0x", 2);
-		count += print_void(' ', st->wi - ((st->pr > len) ? st->pr : len));
-		count += print_void('0', (st->pr > len) ? st->pr - len : 0);
-		fl = 1;
-	}
 	else if (st->wi && st->dot)
 	{
 		count += print_void(' ', st->wi - ((st->pr > len) ? st->pr : len));
 		count += print_void('0', (st->pr > len) ? st->pr - len : 0);
 	}
 	else if (st->dot)
+	{
+		(st->is_neg) ? len-- : 0;
 		count += print_void('0', st->pr - len);
-	(fl == 0) ? (count += write(1, "0x", 2)) : 0;
-	ft_puthex(num, st->fl, 0);
+	}
+	ft_putlong(num, st->fl);
 	return (count);
 }
 
-static int	print_ptr(unsigned long num, int len, int count, t_parse *st)
+static int	print_num(unsigned long num, int len, int count, t_parse *st)
 {
 	if (st->negative && st->wi)
 	{
 		(st->dot) ? count += print_void('0', st->pr - len) : 0;
-		count += write(1, "0x", 2);
-		ft_puthex(num, st->fl, 0);
+		ft_putlong(num, st->fl);
 		count += print_void(' ', st->wi - ((st->pr > len) ? st->pr : len));
 	}
 	else if (st->zero && st->wi && !st->dot)
 	{
 		count += print_void('0', st->wi - len);
-		count += write(1, "0x", 2);
-		ft_puthex(num, st->fl, 0);
+		ft_putlong(num, st->fl);
 	}
 	else if ((st->wi && !st->dot) || (st->wi && st->dot) || st->dot)
-		count += print_ptr2(num, len, count, st);
+		count += print_pt2(num, len, count, st);
 	else
-	{
-		count += write(1, "0x", 2);
-		ft_puthex(num, st->fl, 0);
-	}
+		ft_putlong(num, st->fl);
 	return (count);
 }
 
-int			print_pointer(va_list args, t_parse *st)
+int			print_unsigned(va_list args, t_parse *st)
 {
-	void	*ptr;
-	int		len;
+	unsigned int	num;
+	int				len;
 
-	ptr = va_arg(args, void*);
-	len = count_len((unsigned long)ptr);
-	if (!ptr && st->dot && !st->pr)
+	num = va_arg(args, unsigned long);
+	len = ft_num(num);
+	if (!num && st->dot && !st->pr)
 	{
 		st->fl = 1;
 		len -= 1;
 	}
-	(st->wi) ? (st->wi -= 2) : 0;
-	len += print_ptr((unsigned long)ptr, len, 0, st);
+	len += print_num(num, len, 0, st);
 	return (len);
 }

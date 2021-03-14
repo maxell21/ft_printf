@@ -6,7 +6,7 @@
 /*   By: maxell <maxell@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:49:39 by maxell            #+#    #+#             */
-/*   Updated: 2020/12/27 19:17:02 by maxell           ###   ########.fr       */
+/*   Updated: 2021/01/11 20:59:57 by maxell           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,31 @@ int				ft_istype(char c)
 	return (0);
 }
 
-static int		print_percent(va_list arg, t_parse *ag_str)
+static int		print_percent(t_parse *ag_str)
 {
-	int		wi;
-	char	c;
+	if (ag_str->wi && !ag_str->zero && !ag_str->negative)
+		print_void(' ', ag_str->wi - 1);
+	else if (ag_str->wi && ag_str->zero && !ag_str->negative)
+		print_void('0', ag_str->wi - 1);
+	ft_putchar('%');
+	if (ag_str->wi && ag_str->negative)
+		print_void(' ', ag_str->wi - 1);
+	return ((ag_str->wi ? ag_str->wi : 1));
+}
 
-	c = va_arg(arg, int);
-	wi = ag_str->width;
-	if (wi != 0 && ag_str->negative == 0 && !ag_str->zero)
-		print_void((ag_str->zero == 1 ? '0' : ' '), wi - 1);
-	write(1, "%", 1);
-	if (wi != 0 && ag_str->negative == 1)
-		print_void((ag_str->zero == 1 ? '0' : ' '), wi - 1);
-	return (wi == 0 ? 1 : wi);
+static void		ft_condiitions(t_parse *st)
+{
+	if (st->wi < 0)
+	{
+		st->wi = ft_abs(st->wi);
+		st->negative = 1;
+	}
+	if (st->pr < 0)
+	{
+		st->dot = 0;
+		st->neg_star = 1;
+	}
+	(st->dot) ? (st->zero = 0) : 0;
 }
 
 int				process_arg(va_list args, t_parse *ag_str)
@@ -41,23 +53,22 @@ int				process_arg(va_list args, t_parse *ag_str)
 	char	type;
 
 	type = ag_str->type;
+	ft_condiitions(ag_str);
 	if (type == 'c')
 		ag_str->length = print_char(args, ag_str);
-	if (type == 's')
+	if (type == 37)
+		ag_str->length = print_percent(ag_str);
+	else if (type == 's')
 		ag_str->length = print_str(args, ag_str);
-	if (type == 'p')
+	else if (type == 'p')
 		ag_str->length = print_pointer(args, ag_str);
-	if (type == 'd')
+	else if (type == 'd' || type == 'i')
 		ag_str->length = print_digit(args, ag_str);
-	if (type == 'i')
-		ag_str->length = 1;
-	if (type == 'u')
-		ag_str->length = 1;
-	if (type == 'x')
-		ag_str->length = 1;
-	if (type == 'X')
-		ag_str->length = 1;
-	if (type == '%')
-		ag_str->length = print_percent(args, ag_str);
+	else if (type == 'u')
+		ag_str->length = print_unsigned(args, ag_str);
+	else if (type == 'x')
+		ag_str->length = print_x(args, ag_str);
+	else if (type == 'X')
+		ag_str->length = print_large_x(args, ag_str);
 	return (ag_str->length);
 }

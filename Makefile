@@ -6,7 +6,7 @@
 #    By: maxell <maxell@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/11 18:08:30 by maxell            #+#    #+#              #
-#    Updated: 2020/12/21 19:53:32 by maxell           ###   ########.fr        #
+#    Updated: 2021/01/13 20:13:14 by maxell           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,16 @@ NAME = libftprintf.a
 FLAGS = -Wall -Wextra -Werror
 HEAD = ft_printf.h 
 
-SRC =   ft_isdigit.c	ft_parser.c	ft_strlen.c	\
-		ft_itoa.c	ft_print_p.c	ft_processor.c	ft_types.c \
-		ft_printf.c	ft_str.c	ft_utils.c 
+SRC =   ft_parser.c \
+		ft_print_p.c \
+		ft_print_d.c \
+		ft_print_x.c \
+		ft_print_u.c \
+		ft_processor.c \
+		ft_printf.c	\
+		ft_str.c	\
+		ft_utils.c \
+
 OBJ = ${SRC:.c=.o}
 
 %.o: %.c $(HEAD)
@@ -25,12 +32,9 @@ OBJ = ${SRC:.c=.o}
 $(NAME) : $(OBJ)
 	$(MAKE) all -C ./libft
 	cp ./libft/libft.a $(NAME)
-	ar rcs $(NAME) $(OBJ)
+	ar rcs $(NAME) $?
 	
 all: $(NAME)
-
-compile:
-	gcc -Wall -Werror -Wextra -g *.c -o ft_printf libftprintf.a
 
 clean:
 	$(MAKE) clean -C ./libft
